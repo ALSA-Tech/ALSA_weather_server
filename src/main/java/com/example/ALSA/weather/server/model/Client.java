@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Client {
-    private final UUID id;
-    private final String name;
-    private final String password;
+    private UUID id;
+    private String name;
+    private String password;
     private ArrayList<String> locationSubscriptions;
 
     public Client(@JsonProperty("id") UUID id,
@@ -25,6 +25,10 @@ public class Client {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -35,5 +39,15 @@ public class Client {
 
     public ArrayList<String> getLocationSubscriptions() {
         return locationSubscriptions;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", locationSubscriptions=" + locationSubscriptions +
+                '}';
     }
 }
