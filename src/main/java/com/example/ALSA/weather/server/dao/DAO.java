@@ -17,6 +17,8 @@ public class DAO implements ALSADatabase {
 
     @Override
     public int createClient(UUID id, Client client) {
+        client.setId(id);
+        System.out.println(client);
         System.out.println("[TEST] - created client!");
         return 0;
     }
