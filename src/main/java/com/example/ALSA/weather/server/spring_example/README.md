@@ -7,11 +7,11 @@
     - @Id to mark the instance variable mapping to the primary key in DB. 
 - *ClientController* (class)
     - Client endpoint
-    - @RestController
+    - @RestController (Spring bean)
     - REST API endpoint
     - Holds reference to ClientService (autowired)
 - *ClientService* (class)
-    - @Service (logically does the same as @Component)
+    - @Service (Spring bean - logically does the same as @Component)
     - A business logic layer
     - Bridge between controller and data access
     - Holds reference to ClientRepository (autowired), which handles database transactions. 
