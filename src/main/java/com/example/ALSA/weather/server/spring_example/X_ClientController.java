@@ -1,5 +1,6 @@
 package com.example.ALSA.weather.server.spring_example;
 
+import com.example.ALSA.weather.server.locations.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
