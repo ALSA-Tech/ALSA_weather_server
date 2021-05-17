@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/example/clients")
+@RequestMapping("/api/clients")
 public class ClientController {
 
     private final ClientService service;
@@ -16,9 +16,14 @@ public class ClientController {
         this.service = service;
     }
 
-    @GetMapping("search-location/{location}")
+    @GetMapping("/search-location/{location}")
     public Location searchLocation(@PathVariable String location) throws LocationNotFoundException {
         return service.searchLocation(location);
+    }
+
+    @GetMapping("/key")
+    public String searchLocation() throws LocationNotFoundException {
+        return "sucks";
     }
 
 
