@@ -11,7 +11,7 @@ public class X_ClientController {
 
     private final X_ClientService service;
 
-    @Autowired // Autowire ClientService from the Spring container.
+    @Autowired // Autowire (inject) ClientService from the Spring container.
     public X_ClientController(X_ClientService service) {
         this.service = service;
     }
