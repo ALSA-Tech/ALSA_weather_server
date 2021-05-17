@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/example/clients")
+@RequestMapping("/api/clients")
 public class ClientController {
 //TODO naming convention
     private final ClientService service;
@@ -39,18 +39,20 @@ public class ClientController {
         return service.getSubscriptionLocations(clientId);
     }
 
-    @GetMapping("search-location/{location}")
+    @GetMapping("/search-location/{location}")
     public Location searchLocation(@PathVariable String location) throws LocationNotFoundException {
         return service.searchLocation(location);
     }
 
+
     @PostMapping("/add-location/{client-id}")
-    public Location addLocationToSubscription(@RequestBody String clientId) {
+    public Location addLocationToSubscription(@RequestBody String clientId) throws LocationNotFoundException {
         return service.addLocationToSubscription(clientId);
     }
 
+
     @PostMapping("/remove-location/{client-id}")
-    public void removeLocationFromSubscription(@RequestBody String clientId) {
+    public void removeLocationFromSubscription(@RequestBody String clientId) throws LocationNotFoundException {
         service.removeLocationFromSubscription(clientId);
     }
 
