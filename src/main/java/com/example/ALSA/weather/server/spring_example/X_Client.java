@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class X_Client {
 
     @Id // Primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Needed to auto increment id in DB
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Needed to auto increment id in DB.
     private int id;
 
     private String name;
