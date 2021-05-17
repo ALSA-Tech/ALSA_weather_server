@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @Service // Register as Singleton bean in the Spring container
 public class X_ClientService {
 
-    @Autowired
+    @Autowired // Field based dependency injection
     private X_ClientRepository repository;
 
     public Iterable<X_Client> getClients() {

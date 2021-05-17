@@ -3,7 +3,7 @@ package com.example.ALSA.weather.server.spring_example;
 import javax.persistence.*;
 
 @Entity // For Hibernate. Create JPA Entity.
-@Table(name = "alsa-clients") // ORM: Mapping object to DB table.
+@Table(name = "alsa_clients") // ORM: Mapping object to DB table.
 public class X_Client {
 
     @Id // Primary key
