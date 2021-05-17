@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * Bridge between controller and data access (repository)
  */
 
-@Service // Register as Singleton bean in the Spring container
+@Service // Register as Singleton bean in the Spring container.
 public class X_ClientService {
 
     @Autowired // Field based dependency injection
