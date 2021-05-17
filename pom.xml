@@ -12,6 +12,7 @@
 	<artifactId>ALSA-weather-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ALSA-weather-server</name>
+	<packaging>jar</packaging>
 	<description>ALSA weather server project</description>
 	<properties>
 		<java.version>11</java.version>
