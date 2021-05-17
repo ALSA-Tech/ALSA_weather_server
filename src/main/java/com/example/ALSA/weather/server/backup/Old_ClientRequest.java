@@ -1,10 +1,8 @@
-package com.example.ALSA.weather.server.model;
-
-import com.example.ALSA.weather.server.utils.RSACrypto;
+package com.example.ALSA.weather.server.backup;
 
 /**
  * @author Sebastian Norén <s.norén@gmail.com>
- */public class ClientRequest {
+ */public class Old_ClientRequest {
 
      private String data;
 
