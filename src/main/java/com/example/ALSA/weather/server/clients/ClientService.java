@@ -26,6 +26,8 @@ public class ClientService {
 //Todo add services
 
     public Client registerClient(Client client) throws ClientNotFoundException {//Another exception ex. if user already exist
+        System.out.println("register");
+        System.out.println(client);
         return null; //add service/functionality
     }
 
