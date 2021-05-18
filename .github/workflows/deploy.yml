@@ -1,0 +1,25 @@
+name: Redeploy ALSA on server
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ssh_operations:
+    name: Pull and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pulling latest from GitHub, and deploying
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.SSH_HOST}}
+          port: ${{secrets.SSH_PORT}}
+          username: ${{secrets.SSH_USERNAME}}
+          key: ${{secrets.SSH_KEY}}
+          script: |
+            cd /home/${{secrets.SSH_USERNAME}}/projectALSA
+            ./stop.sh
+            ./pull_latest.sh
+            ./build_jar.sh
+            ./restart.sh
