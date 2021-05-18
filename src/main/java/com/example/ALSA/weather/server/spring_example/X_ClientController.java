@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/exampleY/clients")
+@RequestMapping("/api/example/clients")
 public class X_ClientController {
 
     private final X_ClientService service;
