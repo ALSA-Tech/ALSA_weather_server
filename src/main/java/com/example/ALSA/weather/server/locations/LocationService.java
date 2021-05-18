@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +20,6 @@ public class LocationService {
 
     // Called from ClientService
     public Location searchLocation(String location) throws LocationNotFoundException{
-        System.out.println("Request happening here, DO SOMETHING");
         String decodeLocation = decodeValue(location);
 
         //TODO get data from smhi
@@ -27,7 +28,18 @@ public class LocationService {
         System.out.println("latitude :" + coords.get("lat"));
         System.out.println("longitude:" + coords.get("lon"));
 
-        Location loc = new Location("Malmö","Monday " + decodeLocation);
+        //Test data
+        ArrayList<LocationDataXY> dataSeriesXY = new ArrayList<>();
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().toString(), 28));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(1).toString(), 24));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(2).toString(), 25));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(3).toString(), 21));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(4).toString(), 29));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(5).toString(), 28));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(6).toString(), 30));
+
+
+        Location loc = new Location("Malmö",LocalDate.now().toString(), dataSeriesXY);
         return loc;
     }
 
