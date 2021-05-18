@@ -16,14 +16,16 @@ public class Client {
     private int id; // string id  instead?
     private String name;
     private String password;
+    private String email;
 
     public Client (){
     }
 
-    public Client(int id, String name, String password) {
+    public Client(int id, String name, String password, String email) {
         this.id = id;
         this.name = name;
         this.password = password;
+        this.email = email;
     }
 
     public int getId() {
@@ -36,5 +38,19 @@ public class Client {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
