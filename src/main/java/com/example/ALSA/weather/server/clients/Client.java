@@ -11,7 +11,6 @@ public class Client {
     private String name;
     private String password;
     private String email;
-
     //private ArrayList<String> locationSubscriptions;
 
     public Client (){
@@ -39,6 +38,17 @@ public class Client {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
 }
 
 //Todo client variables
