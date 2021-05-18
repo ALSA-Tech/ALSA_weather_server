@@ -11,7 +11,7 @@ public class Client {
     private String name;
     private String password;
     private String email;
-    
+
     //private ArrayList<String> locationSubscriptions;
 
     public Client (){
