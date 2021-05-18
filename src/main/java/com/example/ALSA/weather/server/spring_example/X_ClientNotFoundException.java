@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class X_ClientNotFoundException extends RuntimeException {
 
     public X_ClientNotFoundException(String message) {
-        // Pass custom error msg to client.
+        // Pass custom error msg to client
         super(message);
     }
 }
