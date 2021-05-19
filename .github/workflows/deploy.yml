@@ -1,4 +1,4 @@
-name: Redeploy ALSA on server
+name: Update ALSA on server
 
 on:
   pull_request:
@@ -7,10 +7,10 @@ on:
 
 jobs:
   ssh_operations:
-    name: Pull and deploy
+    name: Redeploy over SSH
     runs-on: ubuntu-latest
     steps:
-      - name: Pulling latest from GitHub, and deploying
+      - name: Pull, rebuild and deploy ALSA
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.SSH_HOST}}
