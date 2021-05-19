@@ -80,7 +80,11 @@ public class LocationService {
         System.out.println("LONG: " + longitude);
         System.out.println("LATI: " + latitude);
 
-        Location loc = makeApiRequest(latitude,longitude,location).get(0); //We only expect one location back and therefore it will be in index 0.
+        ArrayList<Location> list = makeApiRequest(latitude,longitude,location);
+        Location loc = new Location("NONE", LocalDate.now().toString(),null);
+        if (!list.isEmpty()){
+            loc = list.get(0); //We only expect one location back and therefore it will be in index 0.
+        }
 
         //Test data
         /*ArrayList<LocationDataXY> dataSeriesXY = new ArrayList<>();
@@ -123,9 +127,13 @@ public class LocationService {
         return "";
     }
 
-    public JsonObject createJsonObject(String line) {
-        JsonObject jsonObject = JsonParser.parseString(line).getAsJsonObject();
-        return jsonObject;
+    public JsonObject createJsonObject(String line) throws LocationNotFoundException {
+        try {
+            JsonObject jsonObject = JsonParser.parseString(line).getAsJsonObject();
+            return jsonObject;
+        }catch (Exception e){
+            throw new LocationNotFoundException("Could Not Find Requested Location");
+        }
     }
 
     public TimeSeries[] createTimeSeriesList(JsonObject jsonObject) {
