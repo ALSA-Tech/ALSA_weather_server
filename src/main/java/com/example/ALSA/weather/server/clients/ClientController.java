@@ -2,7 +2,6 @@ package com.example.ALSA.weather.server.clients;
 
 import com.example.ALSA.weather.server.locations.Location;
 import com.example.ALSA.weather.server.locations.LocationNotFoundException;
-import com.example.ALSA.weather.server.spring_example.X_Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public Client register(@RequestBody Client client) {
+    public Client register(@RequestBody Client client) throws EmailException {
         return service.registerClient(client);
     }
 
@@ -35,7 +34,7 @@ public class ClientController {
     }
 
     @GetMapping("get-locations/{clientId}")
-    public List<Location> getLocations(@PathVariable int clientId) throws LocationNotFoundException {
+    public List<Location> getLocations(@PathVariable int clientId) throws LocationNotFoundException, ClientNotFoundException {
         return service.getSubscriptionLocations(clientId);
     }
 
@@ -44,7 +43,7 @@ public class ClientController {
         return service.searchLocation(location);
     }
 
-    @PostMapping("/update/{clientId}")
+    @PostMapping("/update")
     public Client updateClient(@RequestBody Client client) throws ClientNotFoundException {
         // Typical usage: Add and remove locations from subscriptions.
         return service.updateClient(client);

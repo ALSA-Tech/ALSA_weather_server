@@ -7,6 +7,7 @@ import com.example.ALSA.weather.server.utils.ScorpioZHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,29 +27,29 @@ public class ClientService {
     @Autowired
     private ScorpioZHash scorpioZHash;
 
-    public Client registerClient(Client client) throws ClientNotFoundException {//Another exception ex. if user already exist
-        // Hash client pwd before DB storage
-        client.setPassword(scorpioZHash.generateHash(client.getPassword()));
-        // Store to DB. Generates ID and returns the created client object.
-        Client newClient = repository.save(client);
-        newClient.setPassword("hidden"); // Unnecessary to return pwd
-        return newClient;
+    public Client registerClient(Client client) throws EmailException {
+        if(emailExists(client.getEmail())) {
+            throw new EmailException("Email taken: " + client.getEmail());
+        } else {
+            // Hash client pwd before DB storage
+            client.setPassword(scorpioZHash.generateHash(client.getPassword()));
+            // Store to DB. Generates ID and returns the created client object.
+            Client newClient = repository.save(client);
+            newClient.setPassword("hidden"); // Unnecessary to return pwd
+            return newClient;
+        }
     }
 
-    public Client loginClient(Client client) throws ClientNotFoundException {
-        try {
-            Client dbClient = repository.findByEmail(client.getEmail()).get(0);
-            String pwdPlaintext = client.getPassword();
-            String pwdHashed = dbClient.getPassword();
-            // Compare pwd: plaintext <-> hashed
-            if (scorpioZHash.validatePassword(pwdPlaintext, pwdHashed)) {
-                dbClient.setPassword("hidden"); // Unnecessary to return pwd
-                return dbClient;
-            }
-            throw new ClientNotFoundException("Invalid password");
-        } catch (IndexOutOfBoundsException e) {
-            throw new ClientNotFoundException("No client with email: " + client.getEmail());
+    public Client loginClient(Client client) throws ClientNotFoundException, EmailException {
+        Client dbClient = getByEmail(client.getEmail());
+        String pwdPlaintext = client.getPassword();
+        String pwdHashed = dbClient.getPassword();
+        // Compare pwd: plaintext <-> hashed
+        if (scorpioZHash.validatePassword(pwdPlaintext, pwdHashed)) {
+            dbClient.setPassword("hidden"); // Unnecessary to return pwd
+            return dbClient;
         }
+        throw new ClientNotFoundException("Invalid password");
     }
 
     public void logoutClient(Client client) throws ClientNotFoundException {
@@ -77,6 +78,26 @@ public class ClientService {
 
     private boolean clientExists(int id) {
         return repository.findById(id).isPresent();
+    }
+
+    private Client getByEmail(String email) throws ClientNotFoundException, EmailException{
+        ArrayList<Client> clients = repository.findByEmail(email);
+        if(clients.size() == 1) { // Should be the case
+            return clients.get(0);
+        } else if (clients.isEmpty()) {
+            throw new ClientNotFoundException("No client with email: " + email);
+        } else {
+            throw new EmailException("Invalid number of email matches.");
+        }
+    }
+
+    private boolean emailExists(String email) {
+        try {
+            getByEmail(email);
+            return true;
+        } catch (ClientNotFoundException | EmailException e) {
+            return false;
+        }
     }
 
 }
