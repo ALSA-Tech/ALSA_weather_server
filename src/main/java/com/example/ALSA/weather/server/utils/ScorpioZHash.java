@@ -35,7 +35,7 @@ public class ScorpioZHash {
             SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
             byte[] testHash = skf.generateSecret(spec).getEncoded();
             return Arrays.equals(hash, testHash);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException exception) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException | ArrayIndexOutOfBoundsException exception) {
             exception.printStackTrace();
         }
         return false;
