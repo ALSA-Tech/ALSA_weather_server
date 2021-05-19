@@ -11,7 +11,6 @@ public class AlsaWeatherServerApplication {
 	public static void main(String[] args) {
 		System.out.println("Server Started");
 		SpringApplication.run(AlsaWeatherServerApplication.class, args);
-
 	}
 
 }

@@ -7,8 +7,8 @@ import java.time.LocalDate;
  */
 public class LocationDataXY {
 
-    private String localDate;
-    private double temp;
+    private String localDate; //2021-05-18
+    private double temp; //Max temp
 
 
 
