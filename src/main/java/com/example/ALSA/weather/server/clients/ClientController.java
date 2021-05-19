@@ -34,7 +34,7 @@ public class ClientController {
     }
 
     @GetMapping("get-locations/{client-id}")
-    public List<Location> getLocations(@PathVariable String clientId) throws LocationNotFoundException {
+    public List<Location> getLocations(@PathVariable int clientId) throws LocationNotFoundException {
       //  return service.getLocations(id);
         return service.getSubscriptionLocations(clientId);
     }

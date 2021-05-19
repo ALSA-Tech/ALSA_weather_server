@@ -4,6 +4,8 @@ import com.example.ALSA.weather.server.locations.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -21,11 +23,19 @@ public class X_ClientService {
         return repository.findAll();
     }
 
-    public X_Client getClient(Integer id) throws X_ClientNotFoundException {
+    public X_Client getById(Integer id) throws X_ClientNotFoundException {
         try {
             return repository.findById(id).get();
         } catch (NoSuchElementException e) {
             throw new X_ClientNotFoundException("No client with id: " + id);
+        }
+    }
+
+    public X_Client getByEmail(String email) {
+        try {
+            return repository.findByEmail(email).get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new X_ClientNotFoundException("No client with email: " + email);
         }
     }
 
@@ -40,6 +50,8 @@ public class X_ClientService {
     public void deleteClient(int id) {
         repository.deleteById(id);
     }
+
+
 
     /*
      * NOTE:
