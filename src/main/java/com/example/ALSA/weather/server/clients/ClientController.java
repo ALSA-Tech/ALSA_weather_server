@@ -33,7 +33,7 @@ public class ClientController {
         service.logoutClient(client);
     }
 
-    @GetMapping("get-locations/{client-id}")
+    @GetMapping("get-locations/{clientId}")
     public List<Location> getLocations(@PathVariable int clientId) throws LocationNotFoundException {
       //  return service.getLocations(id);
         return service.getSubscriptionLocations(clientId);
@@ -45,14 +45,14 @@ public class ClientController {
     }
 
 
-    @PostMapping("/add-location/{client-id}")
-    public Location addLocationToSubscription(@RequestBody String clientId) throws LocationNotFoundException {
+    @PostMapping("/add-location/{clientId}")
+    public Location addLocationToSubscription(@RequestBody Integer clientId) throws LocationNotFoundException {
         return service.addLocationToSubscription(clientId);
     }
 
 
-    @PostMapping("/remove-location/{client-id}")
-    public void removeLocationFromSubscription(@RequestBody String clientId) throws LocationNotFoundException {
+    @PostMapping("/remove-location/{clientId}")
+    public void removeLocationFromSubscription(@RequestBody Integer clientId) throws LocationNotFoundException {
         service.removeLocationFromSubscription(clientId);
     }
 

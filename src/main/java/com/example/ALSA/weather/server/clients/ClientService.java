@@ -29,9 +29,16 @@ public class ClientService {
     @Autowired // Field based dependency injection
     private LocationService locationService;
 
+    @Autowired
+    private ScorpioZHash scorpioZHash;
+
     public Client registerClient(Client client) throws ClientNotFoundException {//Another exception ex. if user already exist
+        // Hash client pwd before DB storage
+        client.setPassword(scorpioZHash.generateHash(client.getPassword()));
         // Store to DB. Generates ID and returns the created client object.
-        return repository.save(client);
+        Client newClient = repository.save(client);
+        newClient.setPassword("hidden");
+        return newClient;
     }
 
     public Client loginClient(Client client) throws ClientNotFoundException {
@@ -39,8 +46,9 @@ public class ClientService {
             Client dbClient = repository.findByEmail(client.getEmail()).get(0);
             String pwdPlaintext = client.getPassword();
             String pwdHashed = dbClient.getPassword();
-            ScorpioZHash scorpioZHash = new ScorpioZHash();
+            // Compare pwd: plaintext <-> hashed
             if (scorpioZHash.validatePassword(pwdPlaintext, pwdHashed)) {
+                dbClient.setPassword("hidden");
                 return dbClient;
             }
             throw new ClientNotFoundException("Invalid password");
@@ -67,11 +75,11 @@ public class ClientService {
         return locationService.searchLocation(location);
     }
 
-    public Location addLocationToSubscription(String id) throws LocationNotFoundException {
+    public Location addLocationToSubscription(int id) throws LocationNotFoundException {
         return null;
     }
 
-    public void removeLocationFromSubscription(String id) throws LocationNotFoundException {
+    public void removeLocationFromSubscription(int id) throws LocationNotFoundException {
         // -||-
     }
 
