@@ -1,5 +1,7 @@
 package com.example.ALSA.weather.server.utils;
 
+import org.springframework.stereotype.Service;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
@@ -8,6 +10,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 
+@Service
 public class ScorpioZHash {
 
     public String generateHash(String password) {
