@@ -18,8 +18,9 @@ public class ClientController {
     public ClientController(ClientService service) {
         this.service = service;
     }
+
     @PostMapping("/login")
-    public Client login(@RequestBody Client client) {
+    public Client login(@RequestBody Client client) throws ClientNotFoundException{
        return service.loginClient(client);
     }
 
@@ -29,13 +30,12 @@ public class ClientController {
     }
 
     @PostMapping("/logout")
-    public void logout(@RequestBody Client client) {
+    public void logout(@RequestBody Client client) throws ClientNotFoundException {
         service.logoutClient(client);
     }
 
     @GetMapping("get-locations/{clientId}")
     public List<Location> getLocations(@PathVariable int clientId) throws LocationNotFoundException {
-      //  return service.getLocations(id);
         return service.getSubscriptionLocations(clientId);
     }
 
@@ -44,16 +44,10 @@ public class ClientController {
         return service.searchLocation(location);
     }
 
-
-    @PostMapping("/add-location/{clientId}")
-    public Location addLocationToSubscription(@RequestBody Integer clientId) throws LocationNotFoundException {
-        return service.addLocationToSubscription(clientId);
-    }
-
-
-    @PostMapping("/remove-location/{clientId}")
-    public void removeLocationFromSubscription(@RequestBody Integer clientId) throws LocationNotFoundException {
-        service.removeLocationFromSubscription(clientId);
+    @PostMapping("/update/{clientId}")
+    public Client updateClient(@RequestBody Client client) throws ClientNotFoundException {
+        // Typical usage: Add and remove locations from subscriptions.
+        return service.updateClient(client);
     }
 
     @GetMapping("/connection")

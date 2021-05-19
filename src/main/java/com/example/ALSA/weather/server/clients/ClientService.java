@@ -3,17 +3,11 @@ package com.example.ALSA.weather.server.clients;
 import com.example.ALSA.weather.server.locations.Location;
 import com.example.ALSA.weather.server.locations.LocationNotFoundException;
 import com.example.ALSA.weather.server.locations.LocationService;
-import com.example.ALSA.weather.server.spring_example.X_ClientNotFoundException;
 import com.example.ALSA.weather.server.utils.ScorpioZHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Service layer (business logic layer).
@@ -26,7 +20,7 @@ public class ClientService {
     @Autowired // Field based dependency injection
     private ClientRepository repository;
 
-    @Autowired // Field based dependency injection
+    @Autowired
     private LocationService locationService;
 
     @Autowired
@@ -37,7 +31,7 @@ public class ClientService {
         client.setPassword(scorpioZHash.generateHash(client.getPassword()));
         // Store to DB. Generates ID and returns the created client object.
         Client newClient = repository.save(client);
-        newClient.setPassword("hidden");
+        newClient.setPassword("hidden"); // Unnecessary to return pwd
         return newClient;
     }
 
@@ -48,7 +42,7 @@ public class ClientService {
             String pwdHashed = dbClient.getPassword();
             // Compare pwd: plaintext <-> hashed
             if (scorpioZHash.validatePassword(pwdPlaintext, pwdHashed)) {
-                dbClient.setPassword("hidden");
+                dbClient.setPassword("hidden"); // Unnecessary to return pwd
                 return dbClient;
             }
             throw new ClientNotFoundException("Invalid password");
@@ -63,24 +57,26 @@ public class ClientService {
 
     public List<Location> getSubscriptionLocations(Integer id) throws
             LocationNotFoundException, ClientNotFoundException {
-        try {
+        if (clientExists(id)) {
             Client client = repository.findById(id).get();
             return locationService.getLocations(client.getLocationSubscriptions());
-        } catch (NoSuchElementException e) {
-            throw new ClientNotFoundException("No client with id: " + id);
         }
+        throw new ClientNotFoundException("No client with id: " + id);
     }
 
     public Location searchLocation(String location) throws LocationNotFoundException {
         return locationService.searchLocation(location);
     }
 
-    public Location addLocationToSubscription(int id) throws LocationNotFoundException {
-        return null;
+    public Client updateClient(Client client) throws ClientNotFoundException {
+        if(clientExists(client.getId())) {
+            return repository.save(client);
+        }
+        throw new ClientNotFoundException("No client with id: " + client.getId());
     }
 
-    public void removeLocationFromSubscription(int id) throws LocationNotFoundException {
-        // -||-
+    private boolean clientExists(int id) {
+        return repository.findById(id).isPresent();
     }
 
 }
