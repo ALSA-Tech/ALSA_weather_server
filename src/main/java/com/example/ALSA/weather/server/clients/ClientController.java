@@ -56,4 +56,9 @@ public class ClientController {
         service.removeLocationFromSubscription(clientId);
     }
 
+    @GetMapping("/connection")
+    public boolean con() {
+        return true;
+    }
+
 }
