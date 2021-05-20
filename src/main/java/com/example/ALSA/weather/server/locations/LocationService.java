@@ -28,7 +28,7 @@ import java.util.Map;
 @Service
 public class LocationService {
 
-    public ArrayList<Location> makeApiRequest(String latitude, String longitude, String cityName) {
+    public ArrayList<Location> makeApiRequest(String latitude, String longitude, String cityName) throws LocationNotFoundException{
         HttpURLConnection connection;
         BufferedReader reader;
         String line;
@@ -64,7 +64,7 @@ public class LocationService {
             locationList.add(location);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new LocationNotFoundException("Could Not Find Requested Location, (" + cityName + ")");
         }
         return locationList;
     }
@@ -82,15 +82,28 @@ public class LocationService {
         System.out.println("LATI: " + latitude);
 
         ArrayList<Location> list = makeApiRequest(latitude,longitude,location);
-        Location loc = new Location("NONE", LocalDate.now().toString(),null);
-        if (!list.isEmpty()){
-            loc = list.get(0); //We only expect one location back and therefore it will be in index 0.
+        Location loc = null;
+
+        if (list.size() != 0){
+          loc = list.get(0); //We only expect one location back and therefore it will be in index 0.
         }
+
+        //Test data
+        /*ArrayList<LocationDataXY> dataSeriesXY = new ArrayList<>();
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().toString(), 28));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(1).toString(), 24));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(2).toString(), 25));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(3).toString(), 21));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(4).toString(), 29));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(5).toString(), 28));
+        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(6).toString(), 30));
+        */
+
         return loc;
     }
 
     // Called from ClientService (Subscriptions)
-    public List<Location> getLocations(List<String> locations) {
+    public List<Location> getLocations(List<String> locations) throws LocationNotFoundException{
         ArrayList<Location> locationList = new ArrayList<>();
         for (int i = 0; i < locations.size(); i++) {
             String location = locations.get(i);
@@ -118,13 +131,11 @@ public class LocationService {
         return "";
     }
 
-    public JsonObject createJsonObject(String line) throws LocationNotFoundException {
-        try {
+    public JsonObject createJsonObject(String line){
+
             JsonObject jsonObject = JsonParser.parseString(line).getAsJsonObject();
             return jsonObject;
-        }catch (Exception e){
-            throw new LocationNotFoundException("Could Not Find Requested Location");
-        }
+
     }
 
     public TimeSeries[] createTimeSeriesList(JsonObject jsonObject) {
