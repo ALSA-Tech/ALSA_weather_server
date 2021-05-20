@@ -51,12 +51,9 @@ public class ClientController {
         return new ResponseEntity<>(service.getSubscriptionLocations(clientId),HttpStatus.OK);
     }
 
-    @GetMapping("/search-location/{location}")//Location
-    public ResponseEntity<?> searchLocation(@PathVariable String location, HttpSession httpSession) throws LocationNotFoundException {
-        if(httpSession.getAttribute("user") == null){
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(service.searchLocation(location),HttpStatus.OK);
+    @GetMapping("/search-location/{location}")
+    public Location searchLocation(@PathVariable String location) throws LocationNotFoundException {
+        return service.searchLocation(location);
     }
 
     @PostMapping("/update")// Client
