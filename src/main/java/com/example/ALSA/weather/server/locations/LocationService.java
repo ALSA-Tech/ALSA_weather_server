@@ -64,7 +64,7 @@ public class LocationService {
             locationList.add(location);
 
         } catch (Exception e) {
-            throw new LocationNotFoundException("Could Not Find Requested Location, (" + cityName + ")\n\n\n" + e.getMessage());
+            throw new LocationNotFoundException("Could Not Find Requested Location, (" + cityName + ")" + e.getMessage());
         }
         return locationList;
     }
@@ -105,6 +105,7 @@ public class LocationService {
     // Called from ClientService (Subscriptions)
     public List<Location> getLocations(List<String> locations) throws LocationNotFoundException{
         ArrayList<Location> locationList = new ArrayList<>();
+
         for (int i = 0; i < locations.size(); i++) {
             String location = locations.get(i);
             String decodeLocation = decodeValue(location);
@@ -112,8 +113,8 @@ public class LocationService {
             Map<String, String> coords;
             coords = MapUtils.getInstance().getCoordinates(decodeLocation);
 
-            String longitude = coords.get("lon");
-            String latitude = coords.get("lat");
+            String longitude = String.format("%.6f", Float.parseFloat(coords.get("lon"))).replace(",",".");
+            String latitude = String.format("%.6f", Float.parseFloat(coords.get("lat"))).replace(",",".");
 
             Location loc = makeApiRequest(latitude, longitude, location).get(0);
             locationList.add(loc);
