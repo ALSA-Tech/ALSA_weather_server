@@ -75,7 +75,11 @@ public class ClientService {
             // Only allow updates on fields: name & locationSubscription
             dbClient.setName(client.getName());
             dbClient.setLocationSubscriptions(client.getLocationSubscriptions());
-            return repository.save(dbClient);
+            // Store changes to DB
+            repository.save(dbClient);
+            // Hide pwd and return updated client
+            dbClient.setPassword("hidden");
+            return dbClient;
         }
         throw new ClientNotFoundException("No client with id: " + client.getId());
     }
