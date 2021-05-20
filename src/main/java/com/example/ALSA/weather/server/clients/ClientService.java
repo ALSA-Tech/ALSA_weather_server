@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -75,6 +77,8 @@ public class ClientService {
             // Only allow updates on fields: name & locationSubscription
             dbClient.setName(client.getName());
             dbClient.setLocationSubscriptions(client.getLocationSubscriptions());
+            // Remove potential duplicates
+            dbClient.setLocationSubscriptions(removeDuplicates(dbClient.getLocationSubscriptions()));
             // Store changes to DB
             repository.save(dbClient);
             // Hide pwd and return updated client
@@ -95,6 +99,7 @@ public class ClientService {
         } else if (clients.isEmpty()) {
             throw new ClientNotFoundException("No client with email: " + email);
         } else {
+            // This should not be possible, but just in case.
             throw new EmailException("Invalid number of email matches.");
         }
     }
@@ -106,6 +111,17 @@ public class ClientService {
         } catch (ClientNotFoundException | EmailException e) {
             return false;
         }
+    }
+
+    private ArrayList<String> removeDuplicates(List<String> locationList) {
+        HashSet<String> checker = new HashSet<>();
+        ArrayList<String> processedList = new ArrayList<>();
+        for(String location : locationList) {
+            if(checker.add(location)) {
+                processedList.add(location);
+            }
+        }
+        return processedList;
     }
 
 }
