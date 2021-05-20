@@ -40,7 +40,7 @@ public class ClientService {
         }
     }
 
-    public Client loginClient(Client client) throws ClientNotFoundException, EmailException {
+    public Client  loginClient(Client client) throws ClientNotFoundException, EmailException {
         Client dbClient = getByEmail(client.getEmail());
         String pwdPlaintext = client.getPassword();
         String pwdHashed = dbClient.getPassword();
@@ -71,7 +71,11 @@ public class ClientService {
 
     public Client updateClient(Client client) throws ClientNotFoundException {
         if(clientExists(client.getId())) {
-            return repository.save(client);
+            Client dbClient = repository.findById(client.getId()).get();
+            // Only allow updates on fields: name & locationSubscription
+            dbClient.setName(client.getName());
+            dbClient.setLocationSubscriptions(client.getLocationSubscriptions());
+            return repository.save(dbClient);
         }
         throw new ClientNotFoundException("No client with id: " + client.getId());
     }
