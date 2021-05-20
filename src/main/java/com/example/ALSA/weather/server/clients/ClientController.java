@@ -30,10 +30,8 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public Client register(@RequestBody Client client, HttpSession httpSession) throws EmailException {
-      Client successfulClient =  service.registerClient(client);
-        httpSession.setAttribute("user", client);
-        return successfulClient;
+    public Client register(@RequestBody Client client) throws EmailException {
+        return  service.registerClient(client);
     }
 
     @PostMapping("/logout")
