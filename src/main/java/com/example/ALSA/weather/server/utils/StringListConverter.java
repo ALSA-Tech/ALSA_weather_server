@@ -2,6 +2,7 @@ package com.example.ALSA.weather.server.utils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static java.util.Collections.emptyList;
@@ -18,14 +19,28 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     private static final String SPLIT_CHAR = ";";
 
     @Override
+    // model --> DB
     public String convertToDatabaseColumn(List<String> stringList) {
         //return stringList != null ? String.join(SPLIT_CHAR, stringList) : "";
         // Below requires that DB column accepts null
-        return stringList != null ? String.join(SPLIT_CHAR, stringList) : null;
+        if(stringList != null) {
+            if(!stringList.isEmpty()) {
+                return String.join(SPLIT_CHAR, stringList);
+            }
+        }
+        return null;
     }
 
     @Override
+    // DB --> model
     public List<String> convertToEntityAttribute(String string) {
-        return string != null ? Arrays.asList(string.split(SPLIT_CHAR)) : emptyList();
+        //return string != null || string.trim().length() == 0 ? Arrays.asList(string.split(SPLIT_CHAR)) : emptyList();
+
+        if(string != null) {
+            if(string.trim().length() > 0) {
+                return Arrays.asList(string.split(SPLIT_CHAR));
+            }
+        }
+        return new ArrayList<String>();
     }
 }
