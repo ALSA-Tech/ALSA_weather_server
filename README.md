@@ -143,27 +143,34 @@
 ---
 <br>
 
-## File Structure
+## File Structure Server
+
+
+## File Structure Client
 <pre>
-📦DA377B
- ┣ 📂controller
- ┣ 📂middleware
+📦ASLA_weather_client
+ ┣ 📂Controller
+ ┃ ┣ 📜LoginController.java
+ ┃ ┣ 📜OfflineController.java
+ ┃ ┣ 📜PrimaryController.java
+ ┃ ┣ 📜RegistrationController.java
+ ┃ ┣ 📜UserController.java
  ┣ 📂models
- ┃ ┣ 📜user.js
- ┃ ┗ 📜utils.js
- ┣ 📂routes
- ┃ ┣ 📜developer.js
- ┃ ┗ 📜member.js
- ┣ 📂views
- ┃ ┣ 📂css
- ┃ ┣ 📂images
- ┃ ┣ 📂script 
- ┃ ┗ 📜index.html
- ┣ 📜.env
- ┣ 📜.gitignore
- ┣ 📜app.js
- ┣ 📜dbUsers.json
- ┣ 📜package-lock.json
- ┣ 📜package.json
- ┗ 📜README.md
+ ┃ ┣ 📜Client.java
+ ┃ ┣ 📜Location.java
+ ┃ ┣ 📜LocationDataXY.java
+ ┣ 📂utils
+ ┃ ┣ 📜HTTPController.java
+ ┃ ┣ 📜InputController.java
+ ┃ ┣ 📜StringResource.java
+ ┃ ┣ 📜WriteReadFiles.java
+ ┣ 📜App.java
+ ┣ 📂resources
+ ┃ ┣ 📂fxml
+ ┃   ┣ 📂fxml
+ ┃     ┗ 📜login_pane.fxml
+ ┃     ┗ 📜offline_user.fxml
+ ┃     ┗ 📜registrations_pane.fxml
+ ┃     ┗ 📜user_pane.fxml
+ ┃     ┗ 📜primary.fxml
  </pre>
