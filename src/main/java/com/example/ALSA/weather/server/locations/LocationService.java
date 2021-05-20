@@ -64,7 +64,7 @@ public class LocationService {
             locationList.add(location);
 
         } catch (Exception e) {
-            throw new LocationNotFoundException("Could Not Find Requested Location, (" + cityName + ")");
+            throw new LocationNotFoundException("Could Not Find Requested Location, (" + cityName + ")\n\n\n" + e.getMessage());
         }
         return locationList;
     }
@@ -118,7 +118,6 @@ public class LocationService {
             Location loc = makeApiRequest(latitude, longitude, location).get(0);
             locationList.add(loc);
         }
-
         return locationList;
     }
 
@@ -132,10 +131,8 @@ public class LocationService {
     }
 
     public JsonObject createJsonObject(String line){
-
             JsonObject jsonObject = JsonParser.parseString(line).getAsJsonObject();
             return jsonObject;
-
     }
 
     public TimeSeries[] createTimeSeriesList(JsonObject jsonObject) {
