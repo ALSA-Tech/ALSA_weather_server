@@ -113,8 +113,10 @@ public class LocationService {
             String longitude = coords.get("lon");
             String latitude = coords.get("lat");
 
-            locationList = makeApiRequest(latitude, longitude, location);
+            Location loc = makeApiRequest(latitude, longitude, location).get(0);
+            locationList.add(loc);
         }
+
         return locationList;
     }
 
