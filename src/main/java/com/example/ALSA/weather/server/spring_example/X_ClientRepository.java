@@ -1,6 +1,10 @@
 package com.example.ALSA.weather.server.spring_example;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.ArrayList;
+
 
 /**
  * The data access service
@@ -13,4 +17,8 @@ import org.springframework.data.repository.CrudRepository;
  */
 
 public interface X_ClientRepository extends CrudRepository<X_Client, Integer> {
+
+    // Custom query, not provided by repository's common DB operations.
+    @Query(value = "SELECT a FROM X_Client a WHERE a.email = ?1")
+    ArrayList<X_Client> findByEmail(String email);
 }

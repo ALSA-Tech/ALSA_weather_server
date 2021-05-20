@@ -1,5 +1,7 @@
 package com.example.ALSA.weather.server.utils;
 
+import org.springframework.stereotype.Service;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
@@ -8,6 +10,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 
+@Service
 public class ScorpioZHash {
 
     public String generateHash(String password) {
@@ -35,7 +38,7 @@ public class ScorpioZHash {
             SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
             byte[] testHash = skf.generateSecret(spec).getEncoded();
             return Arrays.equals(hash, testHash);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException exception) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException | ArrayIndexOutOfBoundsException exception) {
             exception.printStackTrace();
         }
         return false;

@@ -1,6 +1,5 @@
 package com.example.ALSA.weather.server.spring_example;
 
-import com.example.ALSA.weather.server.locations.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,13 @@ public class X_ClientController {
     }
 
     @GetMapping("/{id}")
-    public X_Client getClient(@PathVariable Integer id) throws X_ClientNotFoundException {
-        return service.getClient(id);
+    public X_Client getClientById(@PathVariable Integer id) throws X_ClientNotFoundException {
+        return service.getById(id);
+    }
+
+    @GetMapping("/by-email/{email}")
+    public X_Client getClientByEmail(@PathVariable String email) throws X_ClientNotFoundException {
+        return service.getByEmail(email);
     }
 
     @PostMapping("/register")

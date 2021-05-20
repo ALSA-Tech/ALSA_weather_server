@@ -7,12 +7,10 @@ import com.example.ALSA.weather.server.utils.ScorpioZHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Service layer (business logic layer).
@@ -25,46 +23,105 @@ public class ClientService {
     @Autowired // Field based dependency injection
     private ClientRepository repository;
 
-    @Autowired // Field based dependency injection
+    @Autowired
     private LocationService locationService;
-//Todo add services
 
-    public Client registerClient(Client client) throws ClientNotFoundException {//Another exception ex. if user already exist
-        System.out.println("register");
-        System.out.println(client);
-        return null; //add service/functionality
+    @Autowired
+    private ScorpioZHash scorpioZHash;
+
+    public Client registerClient(Client client) throws EmailException {
+        if(emailExists(client.getEmail())) {
+            throw new EmailException("Email taken: " + client.getEmail());
+        } else {
+            // Hash client pwd before DB storage
+            client.setPassword(scorpioZHash.generateHash(client.getPassword()));
+            // Store to DB. Generates ID and returns the created client object.
+            Client newClient = repository.save(client);
+            newClient.setPassword("hidden"); // Unnecessary to return pwd
+            return newClient;
+        }
     }
 
-    public Client loginClient(Client client) throws ClientNotFoundException {
-        //TODO remove password string after implement in database
-        final String savedPassword = "65536:U02HkLVPRqQNru5Xfnk5Hw==:wvVaFTZWu/QNNxjHznRkVye+AVv/NgB8Tugf+obUtk0+Tk7QCqdGGFaS51cdQCAk6P+GrQrsADh+VfKx1NDIIg==";
-        ScorpioZHash scorpioZHash = new ScorpioZHash();
-        if (scorpioZHash.validatePassword(client.getPassword(), savedPassword)) {
-
-            return new Client(client.getId(), client.getName(), null, null);
+    public Client  loginClient(Client client) throws ClientNotFoundException, EmailException {
+        Client dbClient = getByEmail(client.getEmail());
+        String pwdPlaintext = client.getPassword();
+        String pwdHashed = dbClient.getPassword();
+        // Compare pwd: plaintext <-> hashed
+        if (scorpioZHash.validatePassword(pwdPlaintext, pwdHashed)) {
+            dbClient.setPassword("hidden"); // Unnecessary to return pwd
+            return dbClient;
         }
-
-        return null; // -||-
+        throw new ClientNotFoundException("Invalid password");
     }
 
     public void logoutClient(Client client) throws ClientNotFoundException {
         // -||-
     }
 
-    public List<Location> getSubscriptionLocations(String id) throws LocationNotFoundException {
-        return null; // -||-
+    public List<Location> getSubscriptionLocations(Integer id) throws
+            LocationNotFoundException, ClientNotFoundException {
+        if (clientExists(id)) {
+            Client client = repository.findById(id).get();
+            return locationService.getLocations(client.getLocationSubscriptions());
+        }
+        throw new ClientNotFoundException("No client with id: " + id);
     }
 
     public Location searchLocation(String location) throws LocationNotFoundException {
         return locationService.searchLocation(location);
     }
 
-    public Location addLocationToSubscription(String id) throws LocationNotFoundException {
-        return null;
+    public Client updateClient(Client client) throws ClientNotFoundException {
+        if(clientExists(client.getId())) {
+            Client dbClient = repository.findById(client.getId()).get();
+            // Only allow updates on fields: name & locationSubscription
+            dbClient.setName(client.getName());
+            dbClient.setLocationSubscriptions(client.getLocationSubscriptions());
+            // Remove potential duplicates
+            dbClient.setLocationSubscriptions(removeDuplicates(dbClient.getLocationSubscriptions()));
+            // Store changes to DB
+            repository.save(dbClient);
+            // Hide pwd and return updated client
+            dbClient.setPassword("hidden");
+            return dbClient;
+        }
+        throw new ClientNotFoundException("No client with id: " + client.getId());
     }
 
-    public void removeLocationFromSubscription(String id) throws LocationNotFoundException {
-        // -||-
+    private boolean clientExists(int id) {
+        return repository.findById(id).isPresent();
+    }
+
+    private Client getByEmail(String email) throws ClientNotFoundException, EmailException{
+        ArrayList<Client> clients = repository.findByEmail(email);
+        if(clients.size() == 1) { // Should be the case
+            return clients.get(0);
+        } else if (clients.isEmpty()) {
+            throw new ClientNotFoundException("No client with email: " + email);
+        } else {
+            // This should not be possible, but just in case.
+            throw new EmailException("Invalid number of email matches.");
+        }
+    }
+
+    private boolean emailExists(String email) {
+        try {
+            getByEmail(email);
+            return true;
+        } catch (ClientNotFoundException | EmailException e) {
+            return false;
+        }
+    }
+
+    private ArrayList<String> removeDuplicates(List<String> locationList) {
+        HashSet<String> checker = new HashSet<>();
+        ArrayList<String> processedList = new ArrayList<>();
+        for(String location : locationList) {
+            if(checker.add(location)) {
+                processedList.add(location);
+            }
+        }
+        return processedList;
     }
 
 }
