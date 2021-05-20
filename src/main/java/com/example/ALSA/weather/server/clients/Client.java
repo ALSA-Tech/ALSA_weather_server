@@ -43,6 +43,10 @@ public class Client {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -57,6 +61,10 @@ public class Client {
 
     public List<String> getLocationSubscriptions() {
         return locationSubscriptions;
+    }
+
+    public void setLocationSubscriptions(List<String> locationSubscriptions) {
+        this.locationSubscriptions = locationSubscriptions;
     }
 
     @Override
