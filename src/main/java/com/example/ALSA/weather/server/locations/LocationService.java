@@ -16,6 +16,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class LocationService {
             //Create TimeSeries List
             TimeSeries[] timeSeries = createTimeSeriesList(jsonObject);
 
-            Location location = new Location(cityName,LocalDate.now().toString(),tempCalculations(timeSeries));
+            Location location = new Location(cityName, LocalDateTime.now().toString(),tempCalculations(timeSeries));
             locationList.add(location);
 
         } catch (Exception e) {

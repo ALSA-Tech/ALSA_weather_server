@@ -30,10 +30,8 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public Client register(@RequestBody Client client, HttpSession httpSession) throws EmailException {
-      Client successfulClient =  service.registerClient(client);
-        httpSession.setAttribute("user", client);
-        return successfulClient;
+    public Client register(@RequestBody Client client) throws EmailException {
+        return  service.registerClient(client);
     }
 
     @PostMapping("/logout")
@@ -51,12 +49,9 @@ public class ClientController {
         return new ResponseEntity<>(service.getSubscriptionLocations(clientId),HttpStatus.OK);
     }
 
-    @GetMapping("/search-location/{location}")//Location
-    public ResponseEntity<?> searchLocation(@PathVariable String location, HttpSession httpSession) throws LocationNotFoundException {
-        if(httpSession.getAttribute("user") == null){
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(service.searchLocation(location),HttpStatus.OK);
+    @GetMapping("/search-location/{location}")
+    public Location searchLocation(@PathVariable String location) throws LocationNotFoundException {
+        return service.searchLocation(location);
     }
 
     @PostMapping("/update")// Client
