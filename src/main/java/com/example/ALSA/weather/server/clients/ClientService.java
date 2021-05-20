@@ -35,6 +35,7 @@ public class ClientService {
         } else {
             // Hash client pwd before DB storage
             client.setPassword(scorpioZHash.generateHash(client.getPassword()));
+            client.setLocationSubscriptions(removeDuplicates(client.getLocationSubscriptions()));
             // Store to DB. Generates ID and returns the created client object.
             Client newClient = repository.save(client);
             newClient.setPassword("hidden"); // Unnecessary to return pwd
@@ -116,9 +117,11 @@ public class ClientService {
     private ArrayList<String> removeDuplicates(List<String> locationList) {
         HashSet<String> checker = new HashSet<>();
         ArrayList<String> processedList = new ArrayList<>();
-        for(String location : locationList) {
-            if(checker.add(location)) {
-                processedList.add(location);
+        if(locationList != null) {
+            for (String location : locationList) {
+                if (checker.add(location)) {
+                    processedList.add(location);
+                }
             }
         }
         return processedList;
