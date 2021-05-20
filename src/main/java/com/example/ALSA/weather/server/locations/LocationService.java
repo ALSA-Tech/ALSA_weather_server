@@ -80,11 +80,14 @@ public class LocationService {
         System.out.println("LONG: " + longitude);
         System.out.println("LATI: " + latitude);
 
-        ArrayList<Location> list = makeApiRequest(latitude,longitude,location);
+        //ArrayList<Location> list = makeApiRequest(latitude,longitude,location);
         Location loc = new Location("NONE", LocalDate.now().toString(),null);
-        if (!list.isEmpty()){
-            loc = list.get(0); //We only expect one location back and therefore it will be in index 0.
-        }
+
+        //if (list.size() != 0){
+        //    loc = list.get(0); //We only expect one location back and therefore it will be in index 0.
+        //}
+
+        loc = makeApiRequest(latitude,longitude,location).get(0);
 
         //Test data
         /*ArrayList<LocationDataXY> dataSeriesXY = new ArrayList<>();
