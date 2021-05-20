@@ -16,6 +16,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class LocationService {
             //Create TimeSeries List
             TimeSeries[] timeSeries = createTimeSeriesList(jsonObject);
 
-            Location location = new Location(cityName,LocalDate.now().toString(),tempCalculations(timeSeries));
+            Location location = new Location(cityName, LocalDateTime.now().toString(),tempCalculations(timeSeries));
             locationList.add(location);
 
         } catch (Exception e) {
@@ -85,18 +86,6 @@ public class LocationService {
         if (!list.isEmpty()){
             loc = list.get(0); //We only expect one location back and therefore it will be in index 0.
         }
-
-        //Test data
-        /*ArrayList<LocationDataXY> dataSeriesXY = new ArrayList<>();
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().toString(), 28));
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(1).toString(), 24));
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(2).toString(), 25));
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(3).toString(), 21));
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(4).toString(), 29));
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(5).toString(), 28));
-        dataSeriesXY.add(new LocationDataXY(LocalDate.now().plusDays(6).toString(), 30));
-        */
-
         return loc;
     }
 
