@@ -46,6 +46,11 @@ Mainly, the cloud service receives a search for a location as a String, derives 
 ## 3.2 Data storage
 
 ## 3.3 Client authentication
+Before the client accesses web resources, they have to provide a username and password via HTTP authentication,
+comparing provided client password with hashed value in the cloud database. Upon a successful login a session attribute
+will be created and associated with the client. Since HTTP is stateless (no session information is retained by the receiver), there is no way to associate a request 
+to any other request and thus we need a way to identify the current user accessing our system. 
+This will help us protect routes by keeping track of user privileges and access to resources.
 
 # 4. Server
 
@@ -59,6 +64,11 @@ So, the server application has an HTTP endpoint dealing with requests and respon
 Figure 1 below illustrates an abstraction of the dataflow when serving a client request.
 
 ## 4.2 Client endpoint
+The client endpoins uses the RESTful API architectural style, where HTTP requests
+are used to access resources provided by the web server. In the web server, endpoints are setup
+in the same way where routes specify what type of CRUD method its expecting on a predefined
+URL. REST technology uses less bandwidth, making it suitable in comparison to other techniques and
+serves the client application efficiently.
 
 ## 4.3 SMHI API
 
