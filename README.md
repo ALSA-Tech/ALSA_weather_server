@@ -29,7 +29,7 @@
 <br>
 
 
-# 1. About ALSA-Weather API
+# 1. About ALSA-Tech Weather API
                                                   
 <img src="/alsa.PNG" alt="Ai target AI" width="800"/>                                                  
 
