@@ -7,7 +7,7 @@
 <br>
 <br>
 
-## Table of contents <!-- omit in toc -->
+# Table of contents <!-- omit in toc -->
 
 - **[About DevUp](#About-DevUp)**
 - **[Architectural Approach](#Architectural-Approach)**
@@ -29,42 +29,36 @@
 <br>
 
 
-## About ALSA-Weather APP
+# About ALSA-Weather API
                                                   
 <img src="/alsa.PNG" alt="Ai target AI" width="800"/>                                                  
 
-## Architectural Approach
- - **#Single page (SPA):**
- - **Restful API:**
- - **Model View Controller (MVC):**
- - 
-## Security
- - **Session:**
- - **HASH:**
- - **Hosting:**
- - **Data storage:**
+# Architectural Approach
 
-## Backend
-   - **Server:**
-      - **Enviromental Variables**
-   - **Routes:** 
+# Security
 
+## Data transfer
 
-   - **MiddleWare and Controllers:**
+## Data storage
 
-                ```
+## Client authentication
 
-## Frontend
- - **Injectable components:**
- - **DOM manipulation:**
- - **Ajax:**
+# Server
 
-```html
+## Architecture
 
-<p>show html preview here</p>
+## Client endpoint
 
-```
----
+## SMHI API
+
+## Database
+
+## Deploy
+
+## Automation: CI/CD
+
+# Client
+
 <br>
 
 ## File Structure Server
