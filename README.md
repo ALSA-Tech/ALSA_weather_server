@@ -1,4 +1,4 @@
-<img src="./img/alsa_github_2_120.PNG">
+<img src="./img/alsa_github_2_120.png">
 
 # ALSA Weather API - Cloud project
 
