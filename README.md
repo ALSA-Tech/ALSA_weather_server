@@ -116,7 +116,21 @@ Since the SMHI API does not have worldwide coverage it might not always get a re
 ## 4.7 File structure
 
 # 5. Client
+- **Features**
+    - *Registration account*
+    - *Login*
+    - *Search weather location*
+    - *Offline functionality*
+    - *Subscribe weather locations*
+    - *Visualize weather data graphical*
 
+- **Client Architecture**
+    - *Maven* - Using maven as a framwork for implemting JavaFX build modules, GSON and simpel JSON parser libraries, for manipulating class data into a simpel json format och parsing json data from the server responses.
+     - *Java FX* - GUI is built as a native desktop Application with Java FX framework. Simpel CSS for styling buttons and layout.
+     - *MODEL-VIEW-CONTROLLER (MVC)* - Client is built after the MVC pattern splitting controllers, views and logic into seperate modules for easy access and work flow.
+     - *HTTPController* - Is the core Core of the communication with the server, it uses generic post and get methods that only communicate in Json format and can then be used for any type of data that needs to be sent or requested. The Class also implements a coockiemanager for handling fast access of the session coockies set by the server when a user log in.
+     - *OFFLINE* - If no connection with the server, offline functionality will be open for use. Every time loged in and weather data is requested it is stored in local cache files on the users computer. This is then read into the graph view for easy and fast access. This works good as the data requested is a forecast for 10 days.
+    - *Platform Independent* - The Application is platform independed as it is a Java jar exe file. It can be moved between computer and run directly as long as the Java virtual machine is installed on that specific computer. 
 ## 5.1 File structure
 
 <pre>
