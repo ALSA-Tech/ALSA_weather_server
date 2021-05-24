@@ -40,6 +40,7 @@
  - 
 ## Security
  - **Session:**
+ - **HASH:**
  - **Hosting:**
  - **Data storage:**
 
