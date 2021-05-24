@@ -57,14 +57,11 @@
 
 ## 4.6 Automation: CI/CD
 
+## 4.7 File structure
+
 # 5. Client
 
-<br>
-
-## File Structure Server
-
-
-## File Structure Client
+## 5.1 File structure
 <pre>
 📦ASLA_weather_client
  ┣ 📂Controller
