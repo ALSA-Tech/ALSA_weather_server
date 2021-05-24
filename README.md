@@ -1,17 +1,20 @@
-# ASLA Weather Cloud Project
+# ASLA Weather API - Cloud project
 
 #### Technology Stack| `Languagues and Tools`
 
-> <img alt="Spring" src="https://img.shields.io/badge/spring%20Boot%20-%236db33f.svg?&style=for-the-badge&logo=spring&logoColor=white"/> <img alt="Java" src="https://img.shields.io/badge/JAVA%20-%23E34F26.svg?&style=for-the-badge&logo=java&logoColor=white"/> <img alt="JavaFX" src="https://img.shields.io/badge/JAVA%20FX%20-%23f29400.svg?&style=for-the-badge&logo=java&logoColor=white"/><img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img alt="Restful" src="https://img.shields.io/badge/RESTful API%20-%23404d59.svg?&style=for-the-badge"/> <img alt="AzureSQL" src="https://img.shields.io/badge/Azure%20SQL%20-%230089d6.svg?&style=for-the-badge&logo=Microsoft-Azure&logoColor=white"/> <img alt="GitHub" src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/> <img alt="Git" src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
+> <img alt="Spring" src="https://img.shields.io/badge/spring%20Boot%20-%236db33f.svg?&style=for-the-badge&logo=spring&logoColor=white"/> <img alt="Java" src="https://img.shields.io/badge/JAVA%20-%23E34F26.svg?&style=for-the-badge&logo=java&logoColor=white"/> <img alt="JavaFX" src="https://img.shields.io/badge/JAVA%20FX%20-%23f29400.svg?&style=for-the-badge&logo=java&logoColor=white"/><img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img alt="Restful" src="https://img.shields.io/badge/RESTful API%20-%23404d59.svg?&style=for-the-badge"/> <img alt="AzureSQL" src="https://img.shields.io/badge/Azure%20SQL%20-%230089d6.svg?&style=for-the-badge&logo=Microsoft-Azure&logoColor=white"/> <img alt="GitHub" src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/> <img alt="cicd" src="https://img.shields.io/badge/Github Actions%20-%23404d59.svg?&style=for-the-badge"/> <img alt="Git" src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
 
 ---
 
 <br>
-<br>
 
 # Table of contents <!-- omit in toc -->
 
+<<<<<<< HEAD
+- **[About DevUp](# 1. About ALSA Weather API)**
+=======
 - **[About ASLA-Tech Weather Cloud Project](#About-ASLA-Tech-Weather-API)**
+>>>>>>> master
 - **[Architectural Approach](#Architectural-Approach)**
   - **Single page (SPA)**
   - **Restful API**
@@ -32,21 +35,27 @@
 
 <br>
 
-# 1. About ALSA-Weather API
+# 1. About ALSA Weather API
 
-ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 10 days.
+ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 9 days.
 
-<img src="/alsa.PNG" alt="Ai target AI" width="800"/>     
+<img src="/alsa.PNG" alt="Ai target AI" width="800"/>
+
 # 2. Architectural Approach
 
-The software suit includes a public RESTful server, and a desktop GUI application for graphical displays of API data.
-Mainly, the cloud service receives a search for a location as a String, derives its longitude and latitude coordinates, makes a request to SMHI API, and then derives and returns top temperatures for the coming 10 days from that data. The client application displays the data in graph format. On top of that, accounts can be registered for subscribing to multiple locations, for which login is prompted.
+The software suit includes a public RESTful server deployed on a Linux VPS (IaaS), and a desktop GUI application for graphical displays of API data.
+Mainly, the cloud service receives a search for a location as a String, derives its longitude and latitude coordinates, makes a request to SMHI API, and then derives and returns top temperatures for the coming 9 days from that data. The client application displays the data in graph format. On top of that, accounts can be registered for subscribing to multiple locations, for which login is prompted.
+
+The server applicaiton is developed using Java with Spring Boot. It is deployed on a Linux VPS (IaaS), and communicates with an Azure SQL database (PaaS). The client application is a desktop application developed with JavaFX.
 
 # 3. Security
 
-## 3.1 Data transfer
+## 3.1 Data transfer (HTTPS)
+The server application is made publicly accessible via *NGINX* reverse proxy server. NGINX provides security both for clients and the server itself. It acts as a centralized endpoint and gatekeeper for all interactions with the server machine, and inspects the requests before internal server routing. 
 
-## 3.2 Data storage
+NGINX enforces HTTPS on all communication with the server machine. This is done using *certbot*, which in turn manages TLS certificates from *Let’s Encrypts* (Certificate Authority). For TLS certificates, a domain name was created and registered to a DNS name server. In short, all data transferred on the public Internet is encypted, while all data being routed internally within the server machine is plaintext.
+
+## 3.2 Data storage (hashing)
 Password is stored in the database with a custom Bcrypt XOR hash. A 16 Byte Salt is generated with "SHA1PRNG", A specific Hash key 512 long is then generated from the original password, the salt, number of iterations. Password is then generated into a byte hash from "PBKDF2HmaxSHA512" encoding. Salt is then encoded with a base64Encoding. The Password hash is Xor encrypted with the salt and later encrypted again with Base64Enconding. Generating an hard encoded hash string the require multiple breaksdown to get the orginial password. This also makes it that every hash stored in the database will look different and no hash string will be displayed the same way. If database is breached.
 
 ```java
@@ -68,7 +77,7 @@ Hash string Iteration:Endcoded salt: Encoded XOR encryppted Salt Hash
 <pre>
 "65536:GaoEQQEDpZHx7Qg6V6wVWQ==:ZyYCPbjr26SA/N4JEf4LMjHcsN5EH3ea1UYvKjhTXTxPBlkBKTwdjb7O4nrP9c/P3UWIhVxfxywAk0VO+uc39A=="
 </pre>
-## 3.3 Client authentication
+## 3.3 Client authentication (login)
 Before the client accesses web resources, they have to provide a username and password via HTTP authentication,
 comparing provided client password with hashed value in the cloud database. Upon a successful login a session attribute
 will be created and associated with the client. Since HTTP is stateless (no session information is retained by the receiver), there is no way to associate a request 
@@ -109,11 +118,54 @@ Since the SMHI API does not have worldwide coverage it might not always get a re
 
 ## 4.4 Database
 
+The server application communicates with a Microsoft SQL database provided as PaaS by Azure. The PaaS database service provides a production-ready database with ready-to-go configurations for connectivity and security. There is also the option to scale the virtual resources to fit the needs of the use case. Using a PaaS also means that the developers can focus on business logic, rather than service management. Another key factor is that a PaaS runs as a dedicated and isoloated service. For development purposes, this is suitable as all team members require access to the database instance, which in turn requires slightly reducing the firewall security. Since the service is isolated to the database, the risks of this never extends to additional services.
+
+For database operations from the server application, *JPA* (Java Persistence API) with *Hibernate* is used. Because it can be set up with *ORM* (Object-Relational Mapping) and has support for many of the most common database operations, manually typing SQL queries in code is only necessary for very specific database requests. The result is a slimmer and more clear code base. This is done by mapping model classes to database tables.
+
 ## 4.5 Deploy
+
+The server application is deployed and managed as a *systemd* daemon on a Linux VPS (IaaS). It utilizes the Spring feature of *externalized configuration files* to automatically run with slightly different settings on the server as it does when pulling the application from GitHub. This way, there is an automatic distinction between development  mode and production mode. When deployed or redeployed on the server, the application ignores certian configurations in the GitHub project, because externalized files outside of the GitHub project instead takes presence. Hence, when run on the server, the application does not run in debug mode, and it is set to only log crucial data.
+
+As mentioned above (3.1 Data transfer), remote access is governed by NGINX reverse proxy server, which also enforces TLS encryption for HTTPS. 
 
 ## 4.6 Automation: CI/CD
 
+*GitHub Actions* is used to automate the workflow of re-building and re-deploying the server application (CI/CD) on the server machine. The workflow is triggered on each accepted pull request on the repository's master branch. For updating the running server application, SSH was chosen as it allows creating dedicated bash scripts on the server, which the GitHub workflow process can be instructed to execute. This is suitable as the workflow can be divided into distinctive phases, where each phase represents a bash script. Any updates on the workflow process can then be done in these dedicated bash scripts, without revealing the steps outside of the server. It also means that updates on the workflow only needs to be done at one place; on the server, and does not require GitHub changes. To enable automatic server deployment, where the GitHub workflow is allowed SSH entrance to the server machine, RSA-keys were added to the GitHub repository as environment secrets. 
+
 ## 4.7 File structure
+
+> Only application specific and central files are mentioned below.
+
+<pre>
+📦ASLA_weather_server
+ ┣ 📂.github/workflows
+ ┃ ┣ 📜deploy.yml                           [CI/CD workflow]
+ ┣ 📂config
+ ┃ ┣ 📜application.properties               [Gitignored private secrets]
+ ┣ 📂src/main
+ ┃ ┣ 📂java
+ ┃ ┃ ┗ 📂ALSA.weather.server
+ ┃ ┃   ┣ 📂clients
+ ┃ ┃   ┃ ┣ 📜Client.java                     [Model]
+ ┃ ┃   ┃ ┣ 📜ClientController.java           [Client endpoint]
+ ┃ ┃   ┃ ┣ 📜ClientService.java              [Business logic]
+ ┃ ┃   ┃ ┣ 📜ClientRepository.java           [Data access]
+ ┃ ┃   ┃ ┗ 📜ClientNotFoundException.java    [HTTP error msg]
+ ┃ ┃   ┣ 📂locations
+ ┃ ┃   ┃ ┣ 📜Location.java                   [Model]
+ ┃ ┃   ┃ ┣ 📜LocationService.java            [Business logic]
+ ┃ ┃   ┃ ┣ 📜LocationDataXY.java             [Model]
+ ┃ ┃   ┃ ┗ 📜LocationNotFoundException.java  [HTTP error msg]
+ ┃ ┃   ┣ 📂spring_example                    [Example code]
+ ┃ ┃   ┣ 📂utils
+ ┃ ┃   ┃ ┣ 📜MapUtils.java                   [Util]
+ ┃ ┃   ┃ ┣ 📜ScorpioZHash.java               [Util]
+ ┃ ┃   ┃ ┗ 📜StringListConverter.java        [Util]
+ ┃ ┃   ┗ 📜AlsaWeatherServerApplication.java [Spring driver class]
+ ┃ ┣ 📂resources
+ ┃ ┃ ┗ 📜application.properties              [Public configs]
+[...]
+ </pre>
 
 # 5. Client
 - **Features**
