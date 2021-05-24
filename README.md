@@ -9,7 +9,7 @@
 
 # Table of contents <!-- omit in toc -->
 
-- **[About DevUp](#About-ASLA-Tech Weather API)**
+- **[About ASLA-Tech Weather API](#About)**
 - **[Architectural Approach](#Architectural-Approach)**
     - **Single page (SPA)**
     - **Restful API**
