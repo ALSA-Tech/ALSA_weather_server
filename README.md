@@ -1,4 +1,4 @@
-# ASLA Weather API - Cloud project
+# ALSA Weather API - Cloud project
 
 #### Technology Stack| `Languagues and Tools`
 
@@ -6,31 +6,25 @@
 
 ---
 
-<br>
 
 # Table of contents <!-- omit in toc -->
 
-<<<<<<< HEAD
-- **[About DevUp](# 1. About ALSA Weather API)**
-=======
-- **[About ASLA-Tech Weather Cloud Project](#About-ASLA-Tech-Weather-API)**
->>>>>>> master
-- **[Architectural Approach](#Architectural-Approach)**
-  - **Single page (SPA)**
-  - **Restful API**
-  - **Model View Controller (MVC)**
-- **[Security](#Security)**
-  - **Session**
-  - **Hosting**
-  - **Data storage**
-- **[Backend](#Backend)**
-  - **Server:**
-  - **Routes:**
-  - **MongoDB:**
-  - **Middleware:**
-- **[Frontend](#Frontend)**
-- **[File Structure](#File-Structure)**
-
+- [1. About ALSA Weather API](https://github.com/ALSA-Tech/ALSA_weather_server#1-about-alsa-weather-api)
+- [2. Architectural Approach](https://github.com/ALSA-Tech/ALSA_weather_server#2-architectural-approach)
+- [3. Security](https://github.com/ALSA-Tech/ALSA_weather_server#3-security)
+  - 3.1 Data transfer (HTTPS)
+  - 3.2 Data storage (hashing)
+  - 3.3 Client authentication (login)
+- [4. Server](https://github.com/ALSA-Tech/ALSA_weather_server#4-server)
+  - 4.1 Architecture
+  - 4.2 Client endpoint
+  - 4.3 SMHI API
+  - 4.4 Database
+  - 4.5 Deploy
+  - 4.6 Automation: CI/CD
+  - 4.7 File structure
+- [5. Client](https://github.com/ALSA-Tech/ALSA_weather_server#5-client)
+  - 5.1 File structure
 ---
 
 <br>
@@ -39,7 +33,7 @@
 
 ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 9 days.
 
-<img src="/alsa.PNG" alt="Ai target AI" width="800"/>
+<img src="./img/alsa.PNG" width="800">
 
 # 2. Architectural Approach
 
@@ -94,7 +88,9 @@ The server application provides a RESTful API as endpoint for client interaction
 
 So, the server application has an HTTP endpoint dealing with requests and responses in JSON format, as well as a backend database communication interface. However, because of the use of Jackson and ORM, manual object mappings in JSON or SQL queries is rarely needed. This reduces repetitive code, and creates a much slimmer and clearer code base.
 
-Figure 1 below illustrates an abstraction of the dataflow when serving a client request.
+The figure below illustrates an abstraction of the dataflow when serving a client request.
+
+<img src="./img/data_flow.png" width="600">
 
 ## 4.2 Client endpoint
 The client endpoins uses the RESTful API architectural style, where HTTP requests
@@ -130,7 +126,7 @@ As mentioned above (3.1 Data transfer), remote access is governed by NGINX rever
 
 ## 4.6 Automation: CI/CD
 
-*GitHub Actions* is used to automate the workflow of re-building and re-deploying the server application (CI/CD) on the server machine. The workflow is triggered on each accepted pull request on the repository's master branch. For updating the running server application, SSH was chosen as it allows creating dedicated bash scripts on the server, which the GitHub workflow process can be instructed to execute. This is suitable as the workflow can be divided into distinctive phases, where each phase represents a bash script. Any updates on the workflow process can then be done in these dedicated bash scripts, without revealing the steps outside of the server. It also means that updates on the workflow only needs to be done at one place; on the server, and does not require GitHub changes. To enable automatic server deployment, where the GitHub workflow is allowed SSH entrance to the server machine, RSA-keys were added to the GitHub repository as environment secrets. 
+*GitHub Actions* is used to automate the workflow of re-building and re-deploying the server application (CI/CD) on the server machine. The [workflow](https://github.com/ALSA-Tech/ALSA_weather_server/blob/master/.github/workflows/deploy.yml) is triggered on each accepted pull request on the repository's master branch. For updating the running server application, SSH was chosen as it allows creating dedicated bash scripts on the server, which the GitHub workflow process can be instructed to execute. This is suitable as the workflow can be divided into distinctive phases, where each phase represents a bash script. Any updates on the workflow process can then be done in these dedicated bash scripts, without revealing the steps outside of the server. It also means that updates on the workflow only needs to be done at one place; on the server, and does not require GitHub changes. To enable automatic server deployment, where the GitHub workflow is allowed SSH entrance to the server machine, RSA-keys were added to the GitHub repository as environment secrets. 
 
 ## 4.7 File structure
 
