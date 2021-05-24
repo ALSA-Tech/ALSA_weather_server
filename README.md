@@ -1,9 +1,11 @@
 # ASLA Weather Cloud Project
 
 #### Technology Stack| `Languagues and Tools`
-><img alt="Spring" src="https://img.shields.io/badge/spring%20Boot%20-%236db33f.svg?&style=for-the-badge&logo=spring&logoColor=white"/> <img alt="Java" src="https://img.shields.io/badge/JAVA%20-%23E34F26.svg?&style=for-the-badge&logo=java&logoColor=white"/> <img alt="JavaFX" src="https://img.shields.io/badge/JAVA%20FX%20-%23f29400.svg?&style=for-the-badge&logo=java&logoColor=white"/><img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img alt="Restful" src="https://img.shields.io/badge/RESTful API%20-%23404d59.svg?&style=for-the-badge"/> <img alt="AzureSQL" src="https://img.shields.io/badge/Azure%20SQL%20-%230089d6.svg?&style=for-the-badge&logo=Microsoft-Azure&logoColor=white"/> <img alt="GitHub" src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/> <img alt="Git" src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/> 
+
+> <img alt="Spring" src="https://img.shields.io/badge/spring%20Boot%20-%236db33f.svg?&style=for-the-badge&logo=spring&logoColor=white"/> <img alt="Java" src="https://img.shields.io/badge/JAVA%20-%23E34F26.svg?&style=for-the-badge&logo=java&logoColor=white"/> <img alt="JavaFX" src="https://img.shields.io/badge/JAVA%20FX%20-%23f29400.svg?&style=for-the-badge&logo=java&logoColor=white"/><img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img alt="Restful" src="https://img.shields.io/badge/RESTful API%20-%23404d59.svg?&style=for-the-badge"/> <img alt="AzureSQL" src="https://img.shields.io/badge/Azure%20SQL%20-%230089d6.svg?&style=for-the-badge&logo=Microsoft-Azure&logoColor=white"/> <img alt="GitHub" src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/> <img alt="Git" src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
 
 ---
+
 <br>
 <br>
 
@@ -11,26 +13,27 @@
 
 - **[About DevUp](#About-ASLA-Tech Weather API)**
 - **[Architectural Approach](#Architectural-Approach)**
-    - **Single page (SPA)**
-    - **Restful API**
-    - **Model View Controller (MVC)**
+  - **Single page (SPA)**
+  - **Restful API**
+  - **Model View Controller (MVC)**
 - **[Security](#Security)**
-    - **Session**
-    - **Hosting**
-    - **Data storage**
+  - **Session**
+  - **Hosting**
+  - **Data storage**
 - **[Backend](#Backend)**
-    - **Server:**
-    - **Routes:**
-    - **MongoDB:**
-   - **Middleware:**   
+  - **Server:**
+  - **Routes:**
+  - **MongoDB:**
+  - **Middleware:**
 - **[Frontend](#Frontend)**
 - **[File Structure](#File-Structure)**
+
 ---
+
 <br>
 
-
 # 1. About ALSA-Weather API
-                                                  
+
 ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 10 days.
 
 <img src="/alsa.PNG" alt="Ai target AI" width="800"/>     
@@ -50,17 +53,29 @@ Mainly, the cloud service receives a search for a location as a String, derives 
 # 4. Server
 
 ## 4.1 Architecture
-The server application (backend) is developed using Spring Boot. It therefore centres around the Spring container, which is responsible for instantiating controller and service classes (as *beans*) which can be injected (*autowired*) using dependency injection. This is convenient as it reduces code and object management. From a programmer perspective, it also provides clarity as the class annotations used clearly specifies the purpose of a class (controller/service/repository/model etc.).
 
-The server application provides a RESTful API as endpoint for client interactions. The API exposes the supported server features, and uses HTTP Session objects for gatekeeping, so that certain features may only be served to logged in clients. Other than that, the REST controller quickly delegates job to a Service instance. The service instance handles the business logic of processing and/or routing requests correctly inside the server application. The service instance is also the one that makes data access requests to the database manager instance, which in Spring JPA terms is known as a repository. Creating clear separations of concerns is good both for security and for delegations of tasks among team members, as it creates isolated and specific instances. 
+The server application (backend) is developed using Spring Boot. It therefore centres around the Spring container, which is responsible for instantiating controller and service classes (as _beans_) which can be injected (_autowired_) using dependency injection. This is convenient as it reduces code and object management. From a programmer perspective, it also provides clarity as the class annotations used clearly specifies the purpose of a class (controller/service/repository/model etc.).
 
-So, the server application has an HTTP endpoint dealing with requests and responses in JSON format, as well as a backend database communication interface. However, because of the use of Jackson and ORM, manual object mappings in JSON or SQL queries is rarely needed. This reduces repetitive code, and creates a much slimmer and clearer code base. 
+The server application provides a RESTful API as endpoint for client interactions. The API exposes the supported server features, and uses HTTP Session objects for gatekeeping, so that certain features may only be served to logged in clients. Other than that, the REST controller quickly delegates job to a Service instance. The service instance handles the business logic of processing and/or routing requests correctly inside the server application. The service instance is also the one that makes data access requests to the database manager instance, which in Spring JPA terms is known as a repository. Creating clear separations of concerns is good both for security and for delegations of tasks among team members, as it creates isolated and specific instances.
+
+So, the server application has an HTTP endpoint dealing with requests and responses in JSON format, as well as a backend database communication interface. However, because of the use of Jackson and ORM, manual object mappings in JSON or SQL queries is rarely needed. This reduces repetitive code, and creates a much slimmer and clearer code base.
 
 Figure 1 below illustrates an abstraction of the dataflow when serving a client request.
 
 ## 4.2 Client endpoint
 
 ## 4.3 SMHI API
+
+The appication is exposed to an open API provided by SMHI _(Sveriges meteorologiska och hydrologiska institut)_.
+To fetch data from the API one needs to provide longitude and latitude of the desired location, to do this the application uses an _Open-Map API_ which is used to translate geo-locations to coordinates.
+<br>
+An example of data that is sent fetched when contacting the SMHI API can be seen _[here](https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/13.766765/lat/56.158913/data.json)_
+<br>
+<br>
+As one can see in the data fecthed, it contains not only temperature, but also air pressure, wind direction, wind speed, relative humidity, and more. Therefore when retrieving the data the server must filter it to only find the temperature data for each day in the 10 upcoming days. Thereafter, the server must also do calculations on what the highest temperature is for each day. When the calculations have been made a List is sent back to the client containing all necesary data for it to be displayed in a graph.
+<br>
+<br>
+Since the SMHI API does not have worldwide coverage it might not always get a response that should be displayed to the client, therefore error-handling has been implemented in a way that whenever an error occurs, an appropiate message is sent back to the client giving them information on what the problem was.
 
 ## 4.4 Database
 
@@ -73,6 +88,7 @@ Figure 1 below illustrates an abstraction of the dataflow when serving a client 
 # 5. Client
 
 ## 5.1 File structure
+
 <pre>
 📦ASLA_weather_client
  ┣ 📂Controller
