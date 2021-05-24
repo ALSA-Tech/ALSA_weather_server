@@ -1,3 +1,5 @@
+<img src="./img/alsa_github_2_120.PNG">
+
 # ALSA Weather API - Cloud project
 
 #### Technology Stack| `Languagues and Tools`
