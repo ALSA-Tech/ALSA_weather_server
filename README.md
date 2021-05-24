@@ -30,10 +30,8 @@
 
 
 ## About ALSA-Weather APP
-
-<img src="/alsa.PNG alt="ALSA-Weather" width="600"/>
                                                   
-<img src="/alsa.PNG" alt="Ai target AI" width="600"/>                                                  
+<img src="/alsa.PNG" alt="Ai target AI" width="800"/>                                                  
 
 ## Architectural Approach
  - **#Single page (SPA):**
