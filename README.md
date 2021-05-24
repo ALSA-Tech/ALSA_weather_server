@@ -29,35 +29,35 @@
 <br>
 
 
-# About ALSA-Weather API
+# 1. About ALSA-Weather API
                                                   
 <img src="/alsa.PNG" alt="Ai target AI" width="800"/>                                                  
 
-# Architectural Approach
+# 2. Architectural Approach
 
-# Security
+# 3. Security
 
-## Data transfer
+## 3.1 Data transfer
 
-## Data storage
+## 3.2 Data storage
 
-## Client authentication
+## 3.3 Client authentication
 
-# Server
+# 4. Server
 
-## Architecture
+## 4.1 Architecture
 
-## Client endpoint
+## 4.2 Client endpoint
 
-## SMHI API
+## 4.3 SMHI API
 
-## Database
+## 4.4 Database
 
-## Deploy
+## 4.5 Deploy
 
-## Automation: CI/CD
+## 4.6 Automation: CI/CD
 
-# Client
+# 5. Client
 
 <br>
 
