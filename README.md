@@ -46,6 +46,13 @@
 # 4. Server
 
 ## 4.1 Architecture
+The server application (backend) is developed using Spring Boot. It therefore centres around the Spring container, which is responsible for instantiating controller and service classes (as *beans*) which can be injected (*autowired*) using dependency injection. This is convenient as it reduces code and object management. From a programmer perspective, it also provides clarity as the class annotations used clearly specifies the purpose of a class (controller/service/repository/model etc.).
+
+The server application provides a RESTful API as endpoint for client interactions. The API exposes the supported server features, and uses HTTP Session objects for gatekeeping, so that certain features may only be served to logged in clients. Other than that, the REST controller quickly delegates job to a Service instance. The service instance handles the business logic of processing and/or routing requests correctly inside the server application. The service instance is also the one that makes data access requests to the database manager instance, which in Spring JPA terms is known as a repository. Creating clear separations of concerns is good both for security and for delegations of tasks among team members, as it creates isolated and specific instances. 
+
+So, the server application has an HTTP endpoint dealing with requests and responses in JSON format, as well as a backend database communication interface. However, because of the use of Jackson and ORM, manual object mappings in JSON or SQL queries is rarely needed. This reduces repetitive code, and creates a much slimmer and clearer code base. 
+
+Figure 1 below illustrates an abstraction of the dataflow when serving a client request.
 
 ## 4.2 Client endpoint
 
