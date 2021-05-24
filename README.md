@@ -31,7 +31,7 @@
 
 ## About ALSA-Weather APP
 
-<img src="https://github.com/ALSA-Tech/ALSA_weather_server/blob/master/img/alsa.PNG alt="ALSA-Weather" width="600"/>
+<img src="img/alsa.PNG alt="ALSA-Weather" width="600"/>
 
 ## Architectural Approach
  - **#Single page (SPA):**
