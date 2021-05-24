@@ -9,7 +9,7 @@
 
 # Table of contents <!-- omit in toc -->
 
-- **[About ASLA-Tech Weather API](#About)**
+- **[About DevUp](#About-ASLA-Tech Weather API)**
 - **[Architectural Approach](#Architectural-Approach)**
     - **Single page (SPA)**
     - **Restful API**
@@ -29,11 +29,13 @@
 <br>
 
 
-# 1. About ALSA-Tech Weather API
+# 1. About ALSA-Weather API
                                                   
-<img src="/alsa.PNG" alt="Ai target AI" width="800"/>                                                  
-
+ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 10 days.                                                
 # 2. Architectural Approach
+
+The software suit includes a public RESTful server, and a desktop GUI application for graphical displays of API data.
+Mainly, the cloud service receives a search for a location as a String, derives its longitude and latitude coordinates, makes a request to SMHI API, and then derives and returns top temperatures for the coming 10 days from that data. The client application displays the data in graph format. On top of that, accounts can be registered for subscribing to multiple locations, for which login is prompted.
 
 # 3. Security
 
