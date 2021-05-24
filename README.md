@@ -97,7 +97,7 @@ serves the client application efficiently.
 ## 4.3 SMHI API
 
 The appication is exposed to an open API provided by SMHI _(Sveriges meteorologiska och hydrologiska institut)_.
-To fetch data from the API one needs to provide longitude and latitude of the desired location, to do this the application uses an _Open-Map API_ which is used to translate geo-locations to coordinates.
+To fetch data from the API one needs to provide longitude and latitude of the desired location. This is implemented by requesting geo-location data from an OPEN Map API that responds with data information in a JSON format of that specific location requested. Longitude and Latitude are then filtered out and sent to the SMHI API. Open Map API is used instead of standard Google Map API as it would require credit credentials, and still generated the same precision and information.  
 <br>
 An example of data that is sent fetched when contacting the SMHI API can be seen _[here](https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/13.766765/lat/56.158913/data.json)_
 <br>
