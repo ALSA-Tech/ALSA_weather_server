@@ -47,7 +47,27 @@ Mainly, the cloud service receives a search for a location as a String, derives 
 ## 3.1 Data transfer
 
 ## 3.2 Data storage
+Password is stored in the database with a custom Bcrypt XOR hash. A 16 Byte Salt is generated with "SHA1PRNG", A specific Hash key 512 long is then generated from the original password, the salt, number of iterations. Password is then generated into a byte hash from "PBKDF2HmaxSHA512" encoding. Salt is then encoded with a base64Encoding. The Password hash is Xor encrypted with the salt and later encrypted again with Base64Enconding. Generating an hard encoded hash string the require multiple breaksdown to get the orginial password. This also makes it that every hash stored in the database will look different and no hash string will be displayed the same way. If database is breached.
 
+```java
+    public String generateHash(String password) {
+        try {
+            int iterations = 65536;
+            byte[] salt = getSalt();
+            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, 512);
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+            byte[] hash = skf.generateSecret(spec).getEncoded();
+            return iterations + ":" + base64Encode(salt) + ":" + base64Encode(xorWithKey(hash,salt));
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+```
+Hash string Iteration:Endcoded salt: Encoded XOR encryppted Salt Hash
+<pre>
+"65536:GaoEQQEDpZHx7Qg6V6wVWQ==:ZyYCPbjr26SA/N4JEf4LMjHcsN5EH3ea1UYvKjhTXTxPBlkBKTwdjb7O4nrP9c/P3UWIhVxfxywAk0VO+uc39A=="
+</pre>
 ## 3.3 Client authentication
 Before the client accesses web resources, they have to provide a username and password via HTTP authentication,
 comparing provided client password with hashed value in the cloud database. Upon a successful login a session attribute
