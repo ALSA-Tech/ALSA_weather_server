@@ -31,7 +31,9 @@
 
 # 1. About ALSA-Weather API
                                                   
-ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 10 days.                                                
+ALSA Weather API is a software suit for subscribing and searching for top temperatures at geographical locations. The API is open for searches on locations, but requires an account and authentication for subscribing to locations. For each location, the ALSA API returns the top temperature for each day over the coming 10 days.
+
+<img src="/alsa.PNG" alt="Ai target AI" width="800"/>     
 # 2. Architectural Approach
 
 The software suit includes a public RESTful server, and a desktop GUI application for graphical displays of API data.
